@@ -3,6 +3,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { async } from 'q';
 
 @Component({
   selector: 'app-home',
@@ -29,33 +30,31 @@ export class HomePage {
   }
 
 
-  Logout() {
+  async Logout() {
 
-    async()=>{
       const alert = await this.alertController.create({
         header: 'Confirmar!',
-        message: '<strong>Tem certeza que deseja sair do chat?</strong>',
+        message: '<p>Tem certeza que deseja sair do aplicativo?</p>',
         buttons: [
           {
-            text: 'Cancear',
-            role: 'Cancelar',
+            text: 'Cancelar',
+            role: 'cancelar',
             cssClass: 'secondary',
             handler: (blah) => {
-              console.log('Confirm Cancel: blah');
+              console.log('Saída cancelada');
             }
           }, {
             text: 'Ok',
             handler: () => {
               this.fbauth.auth.signOut()
-              this.router.navigate(['/home'])
+              this.router.navigate(['/home']) 
+              console.log('Não autenticado');
             }
           }
         ]
       });
-
+  
       await alert.present();
-
-    }
 
   }
 
