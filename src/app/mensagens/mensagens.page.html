@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Mensagens</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-item no-lines>
+
+      <ion-input type="text" [(ngModel)]="mensagem.texto" (keyup.enter)="EnviarMensagem(mensagem.texto); texto='' " name="txtmensagem"></ion-input>
+      <ion-button (click)="EnviarMensagem(mensagem.texto); texto='' ">
+        <ion-icon name="send"></ion-icon>
+      </ion-button>
+
+    </ion-item>
+  </ion-toolbar>
+</ion-footer>

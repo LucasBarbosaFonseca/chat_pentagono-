@@ -7,8 +7,9 @@
 <ion-content>
 
   <ion-list>
+      <ion-button (click)="Logout()">Logout</ion-button>
 
-    <ion-item *ngFor="let usuario of listausuarios">
+    <ion-item (click)="IrParaMensagens(usuario.userid)" *ngFor="let usuario of listausuarios">
       {{usuario.nome}}
     </ion-item>
 
