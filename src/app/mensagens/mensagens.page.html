@@ -6,14 +6,26 @@
 
 <ion-content>
 
+  <div *ngFor="let msg of listamensagens | async">
+    
+    <div *ngIf="msg.de==usuarioMsgDe && msg.para==usuarioMsgPara">
+      {{msg.texto}}
+    </div>
+
+    <div *ngIf="msg.para==usuarioMsgDe && msg.de==usuarioMsgPara">
+      {{msg.texto}}
+    </div>
+
+  </div>
+
 </ion-content>
 
 <ion-footer>
   <ion-toolbar>
     <ion-item no-lines>
 
-      <ion-input type="text" [(ngModel)]="mensagem.texto" (keyup.enter)="EnviarMensagem(mensagem.texto); texto='' " name="txtmensagem"></ion-input>
-      <ion-button (click)="EnviarMensagem(mensagem.texto); texto='' ">
+      <ion-input type="text" [(ngModel)]="mensagem.texto" (keyup.enter)="EnviarMensagem(mensagem.texto); mensagem.texto='' " name="txtmensagem"></ion-input>
+      <ion-button (click)="EnviarMensagem(mensagem.texto); mensagem.texto='' ">
         <ion-icon name="send"></ion-icon>
       </ion-button>
 

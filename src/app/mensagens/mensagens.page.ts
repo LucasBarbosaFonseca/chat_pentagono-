@@ -4,6 +4,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { AngularFirestore } from 'angularfire2/firestore';
+import { Observable } from 'rxjs/internal/Observable';
 
 @Component({
   selector: 'app-mensagens',
@@ -15,6 +16,8 @@ export class MensagensPage implements OnInit {
   usuarioMsgPara:string
   mensagem:Mensagens
   usuarioMsgDe:string
+  lista:Observable<Mensagens[]>
+  listamensagens:Observable<Mensagens[]>
 
   constructor(public fbauth:AngularFireAuth, public acrroute:ActivatedRoute, 
     public fbstore:AngularFirestore) { 
@@ -28,11 +31,39 @@ export class MensagensPage implements OnInit {
     })
 
     this.VerificarLogin()
+    this.ListarMensagens()
 
   }
 
   ngOnInit() {
   }
+
+
+
+  ListarMensagens() {
+
+    this.lista = this.fbstore.collection<Mensagens>("Mensagens", ref=>{
+
+      return ref
+
+    }).valueChanges()
+
+    this.lista.subscribe(res=>{
+
+      this.FiltrarLista(res)
+
+    })
+
+  }
+
+
+
+  FiltrarLista(res) {
+
+    this.listamensagens = res.filter(t=>(t.de==this.usuarioMsgDe && t.para==this.usuarioMsgPara) || (t.para==this.usuarioMsgDe && t.de==this.usuarioMsgPara))
+
+  }
+
 
 
   EnviarMensagem(texto) {
